@@ -1,6 +1,6 @@
-package com.gmail.kutilandrej.util;
+package com.gmail.kutilandrej.cinema.util;
 
-import com.gmail.kutilandrej.exception.DataProcessingException;
+import com.gmail.kutilandrej.cinema.exception.DataProcessingException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 

@@ -12,6 +12,6 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hbm2ddl.auto">create-drop</property>
 
-        <mapping class="com.gmail.kutilandrej.model.Movie"/>
+        <mapping class="com.gmail.kutilandrej.cinema.model.Movie"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,4 +1,4 @@
-package com.gmail.kutilandrej.exception;
+package com.gmail.kutilandrej.cinema.exception;
 
 public class DataProcessingException extends RuntimeException {
     public DataProcessingException(String message, Throwable cause) {

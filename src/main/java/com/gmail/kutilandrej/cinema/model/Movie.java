@@ -1,4 +1,4 @@
-package com.gmail.kutilandrej.model;
+package com.gmail.kutilandrej.cinema.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

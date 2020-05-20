@@ -1,10 +1,10 @@
-package com.gmail.kutilandrej.dao.impl;
+package com.gmail.kutilandrej.cinema.dao.impl;
 
-import com.gmail.kutilandrej.dao.MovieDao;
-import com.gmail.kutilandrej.exception.DataProcessingException;
-import com.gmail.kutilandrej.lib.Dao;
-import com.gmail.kutilandrej.model.Movie;
-import com.gmail.kutilandrej.util.HibernateUtil;
+import com.gmail.kutilandrej.cinema.dao.MovieDao;
+import com.gmail.kutilandrej.cinema.exception.DataProcessingException;
+import com.gmail.kutilandrej.cinema.lib.Dao;
+import com.gmail.kutilandrej.cinema.model.Movie;
+import com.gmail.kutilandrej.cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
 import org.apache.log4j.Logger;
@@ -20,9 +20,9 @@ public class MovieDaoImpl implements MovieDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Long itemId = (Long) session.save(movie);
+            Long cinemaId = (Long) session.save(movie);
             transaction.commit();
-            movie.setId(itemId);
+            movie.setId(cinemaId);
             return movie;
         } catch (Exception e) {
             if (transaction != null) {
