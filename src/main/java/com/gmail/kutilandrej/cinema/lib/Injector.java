@@ -1,4 +1,4 @@
-package com.gmai.kutilandrej.lib;
+package com.gmail.kutilandrej.cinema.lib;
 
 import java.io.File;
 import java.io.IOException;
