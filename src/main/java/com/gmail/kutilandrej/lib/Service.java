@@ -1,4 +1,4 @@
-package com.gmai.kutilandrej.lib;
+package com.gmail.kutilandrej.lib;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
