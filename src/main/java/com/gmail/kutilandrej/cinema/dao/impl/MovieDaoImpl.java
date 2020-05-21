@@ -7,18 +7,18 @@ import com.gmail.kutilandrej.cinema.model.Movie;
 import com.gmail.kutilandrej.cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-    private static final Logger LOGGER = Logger.getLogger(MovieDaoImpl.class);
 
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Long movieId = (Long) session.save(movie);
             transaction.commit();
@@ -29,6 +29,10 @@ public class MovieDaoImpl implements MovieDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert Movie entity", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 

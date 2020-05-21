@@ -17,7 +17,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "FROM MovieSession MS WHERE MS.movie.id = :id "
                     + "AND MS.showTime > :date1 AND MS.showTime < :date2";
@@ -34,7 +33,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -44,6 +45,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert MovieSession entity", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }
