@@ -7,13 +7,11 @@ import com.gmail.kutilandrej.cinema.model.CinemaHall;
 import com.gmail.kutilandrej.cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private static final Logger LOGGER = Logger.getLogger(CinemaHallDaoImpl.class);
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {

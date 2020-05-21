@@ -6,6 +6,7 @@ import com.gmail.kutilandrej.cinema.lib.Dao;
 import com.gmail.kutilandrej.cinema.model.MovieSession;
 import com.gmail.kutilandrej.cinema.util.HibernateUtil;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,10 +24,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
             query.setParameter("id", movieId);
             query.setParameter("date1", date.atStartOfDay());
-            query.setParameter("date2", date.atTime(23,59));
+            query.setParameter("date2", date.atTime(LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't insert MovieSession entity", e);
+            throw new DataProcessingException("Can't find MovieSession", e);
         }
     }
 
