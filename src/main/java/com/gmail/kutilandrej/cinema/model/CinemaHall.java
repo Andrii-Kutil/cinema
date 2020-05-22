@@ -7,20 +7,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movie")
-public class Movie {
+@Table(name = "cinema_hall")
+public class CinemaHall {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private int capacity;
     private String description;
 
-    public Movie() {
+    public CinemaHall() {
     }
 
-    public Movie(String title, String description) {
-        this.title = title;
+    public CinemaHall(int capacity, String description) {
+        this.capacity = capacity;
         this.description = description;
     }
 
@@ -32,12 +32,12 @@ public class Movie {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public String getDescription() {
@@ -50,9 +50,9 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{"
+        return "CinemaHallService{"
                 + "id=" + id
-                + ", title='" + title + '\''
+                + ", capacity=" + capacity
                 + ", description='" + description + '\''
                 + '}';
     }
