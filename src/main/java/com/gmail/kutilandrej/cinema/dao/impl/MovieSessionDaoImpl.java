@@ -18,7 +18,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM MovieSession MS WHERE MS.movie.id = :id "
+            String hql = "FROM MovieSession MS JOIN FETCH MS.movie "
+                    + "JOIN FETCH MS.cinemaHall WHERE MS.movie.id = :id "
                     + "AND MS.showTime > :date1 AND MS.showTime < :date2";
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
             query.setParameter("id", movieId);
@@ -37,7 +38,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.persist(movieSession);
+            session.saveOrUpdate(movieSession);
             transaction.commit();
             return movieSession;
         } catch (Exception e) {
