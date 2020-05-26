@@ -12,7 +12,7 @@ import com.gmail.kutilandrej.cinema.util.HashUtil;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Inject
-    UserService userService;
+    private UserService userService;
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
