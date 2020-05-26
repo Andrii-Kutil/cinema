@@ -1,28 +1,27 @@
 package com.gmail.kutilandrej.cinema.dao.impl;
 
-import com.gmail.kutilandrej.cinema.dao.MovieDao;
+import com.gmail.kutilandrej.cinema.dao.UserDao;
 import com.gmail.kutilandrej.cinema.exception.DataProcessingException;
 import com.gmail.kutilandrej.cinema.lib.Dao;
-import com.gmail.kutilandrej.cinema.model.Movie;
+import com.gmail.kutilandrej.cinema.model.User;
 import com.gmail.kutilandrej.cinema.util.HibernateUtil;
-import java.util.List;
-import javax.persistence.criteria.CriteriaQuery;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
-public class MovieDaoImpl implements MovieDao {
-
+public class UserDaoImpl implements UserDao {
     @Override
-    public Movie add(Movie movie) {
+    public User add(User user) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.save(user);
             transaction.commit();
-            return movie;
+            return user;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -36,14 +35,14 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> getAll() {
+    public Optional<User> findByEmail(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
-                    .createQuery(Movie.class);
-            criteriaQuery.from(Movie.class);
-            return session.createQuery(criteriaQuery).getResultList();
+            String hql = "FROM User U WHERE U.email = :email";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("email", email);
+            return Optional.ofNullable(query.uniqueResult());
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all movies. ", e);
+            throw new DataProcessingException("Can't find User", e);
         }
     }
 }
