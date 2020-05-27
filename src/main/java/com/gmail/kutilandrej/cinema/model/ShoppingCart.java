@@ -20,7 +20,7 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Ticket> tickets;
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
