@@ -5,6 +5,7 @@ import com.gmail.kutilandrej.cinema.lib.Inject;
 import com.gmail.kutilandrej.cinema.lib.Service;
 import com.gmail.kutilandrej.cinema.model.User;
 import com.gmail.kutilandrej.cinema.service.AuthenticationService;
+import com.gmail.kutilandrej.cinema.service.ShoppingCartService;
 import com.gmail.kutilandrej.cinema.service.UserService;
 import com.gmail.kutilandrej.cinema.util.HashUtil;
 
@@ -13,6 +14,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Inject
     private UserService userService;
+    @Inject
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
@@ -23,9 +26,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User register(String email, String login, String password) {
-        User user = new User(email, login);
+        User user = new User(login, email);
         user.setSalt(HashUtil.getSalt());
         user.setPassword(HashUtil.hashPassword(password, user.getSalt()));
-        return userService.add(user);
+        userService.add(user);
+        shoppingCartService.registerNewShoppingCart(user);
+        return user;
     }
 }

@@ -27,7 +27,6 @@ public class User {
     public User(String login, String email) {
         this.login = login;
         this.email = email;
-        this.salt = salt;
     }
 
     public byte[] getSalt() {
