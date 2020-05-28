@@ -16,7 +16,7 @@ public class MovieSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long movieSessionId;
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -32,12 +32,12 @@ public class MovieSession {
         this.showTime = showTime;
     }
 
-    public Long getMovieSessionId() {
-        return movieSessionId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMovieSessionId(Long movieSessionId) {
-        this.movieSessionId = movieSessionId;
+    public void setId(Long movieSessionId) {
+        this.id = movieSessionId;
     }
 
     public Movie getMovie() {
@@ -67,7 +67,7 @@ public class MovieSession {
     @Override
     public String toString() {
         return "MovieSession{"
-                + "movieSessionId=" + movieSessionId
+                + "movieSessionId=" + id
                 + ", movie=" + movie
                 + ", cinemaHall=" + cinemaHall
                 + ", showTime=" + showTime
