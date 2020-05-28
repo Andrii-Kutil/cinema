@@ -1,6 +1,6 @@
 package com.gmail.kutilandrej.cinema.model;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,36 +8,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "shopping_cart")
-public class ShoppingCart {
+@Table(name = "orders")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shopping_cart_id")
-    private List<Ticket> tickets;
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "shopping_cart_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private List<Ticket> tickets;
+    private LocalDateTime localDateTime;
 
-    public ShoppingCart() {
-        tickets = new ArrayList<>();
+    public Order() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Order(List<Ticket> tickets, User user, LocalDateTime localDateTime) {
+        this.tickets = tickets;
+        this.user = user;
+        this.localDateTime = localDateTime;
     }
 
     public List<Ticket> getTickets() {
@@ -48,6 +43,14 @@ public class ShoppingCart {
         this.tickets = tickets;
     }
 
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
+    }
+
     public User getUser() {
         return user;
     }
@@ -56,12 +59,21 @@ public class ShoppingCart {
         this.user = user;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return "ShoppingCart{"
+        return "Order{"
                 + "id=" + id
-                + ", tickets=" + tickets
                 + ", user=" + user
+                + ", tickets=" + tickets
+                + ", localDateTime=" + localDateTime
                 + '}';
     }
 }

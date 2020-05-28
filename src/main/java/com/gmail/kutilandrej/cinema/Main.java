@@ -5,12 +5,15 @@ import com.gmail.kutilandrej.cinema.lib.Injector;
 import com.gmail.kutilandrej.cinema.model.CinemaHall;
 import com.gmail.kutilandrej.cinema.model.Movie;
 import com.gmail.kutilandrej.cinema.model.MovieSession;
+import com.gmail.kutilandrej.cinema.model.Order;
 import com.gmail.kutilandrej.cinema.model.User;
 import com.gmail.kutilandrej.cinema.service.AuthenticationService;
 import com.gmail.kutilandrej.cinema.service.MovieSessionService;
+import com.gmail.kutilandrej.cinema.service.OrderService;
 import com.gmail.kutilandrej.cinema.service.ShoppingCartService;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.gmail.kutilandrej.cinema");
@@ -41,5 +44,11 @@ public class Main {
         ShoppingCartService shoppingCartService = (ShoppingCartService)
                 injector.getInstance(ShoppingCartService.class);
         shoppingCartService.addSession(movieSession1, user);
+        OrderService orderService = (OrderService)
+                injector.getInstance(OrderService.class);
+        orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
+        System.out.println("---------------------------------------");
+        List<Order> orderHistory = orderService.getOrderHistory(user);
+        orderHistory.forEach(System.out::println);
     }
 }
