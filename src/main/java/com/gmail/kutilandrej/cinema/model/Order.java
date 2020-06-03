@@ -21,7 +21,7 @@ public class Order {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinColumn(name = "order_id")
     private List<Ticket> tickets;
     private LocalDateTime localDateTime;
@@ -71,7 +71,6 @@ public class Order {
     public String toString() {
         return "Order{"
                 + "id=" + id
-                + ", user=" + user
                 + ", tickets=" + tickets
                 + ", localDateTime=" + localDateTime
                 + '}';

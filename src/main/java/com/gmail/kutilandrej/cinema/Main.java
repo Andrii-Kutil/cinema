@@ -40,12 +40,13 @@ public class Main {
                 injector.getInstance(AuthenticationService.class);
         authenticationService.register("a", "kutil", "1234");
         User user = authenticationService.login("a", "1234");
-
         ShoppingCartService shoppingCartService = (ShoppingCartService)
                 injector.getInstance(ShoppingCartService.class);
         shoppingCartService.addSession(movieSession1, user);
         OrderService orderService = (OrderService)
                 injector.getInstance(OrderService.class);
+        orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
+        shoppingCartService.addSession(movieSession3, user);
         orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
         System.out.println("---------------------------------------");
         List<Order> orderHistory = orderService.getOrderHistory(user);

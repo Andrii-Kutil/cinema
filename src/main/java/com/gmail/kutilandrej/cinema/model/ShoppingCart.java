@@ -20,7 +20,7 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinColumn(name = "shopping_cart_id")
     private List<Ticket> tickets;
     @OneToOne(fetch = FetchType.LAZY)
