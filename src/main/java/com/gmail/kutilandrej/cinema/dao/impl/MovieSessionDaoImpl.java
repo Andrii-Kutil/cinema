@@ -2,22 +2,26 @@ package com.gmail.kutilandrej.cinema.dao.impl;
 
 import com.gmail.kutilandrej.cinema.dao.MovieSessionDao;
 import com.gmail.kutilandrej.cinema.exception.DataProcessingException;
-import com.gmail.kutilandrej.cinema.lib.Dao;
 import com.gmail.kutilandrej.cinema.model.MovieSession;
-import com.gmail.kutilandrej.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             String hql = "FROM MovieSession MS JOIN FETCH MS.movie "
                     + "JOIN FETCH MS.cinemaHall WHERE MS.movie.id = :id "
                     + "AND MS.showTime > :date1 AND MS.showTime < :date2";
@@ -36,7 +40,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(movieSession);
             transaction.commit();

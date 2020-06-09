@@ -1,17 +1,17 @@
 package com.gmail.kutilandrej.cinema.service.impl;
 
 import com.gmail.kutilandrej.cinema.dao.MovieSessionDao;
-import com.gmail.kutilandrej.cinema.lib.Inject;
-import com.gmail.kutilandrej.cinema.lib.Service;
 import com.gmail.kutilandrej.cinema.model.MovieSession;
 import com.gmail.kutilandrej.cinema.service.MovieSessionService;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
 
-    @Inject
+    @Autowired
     MovieSessionDao movieSessionDao;
 
     @Override

@@ -2,20 +2,25 @@ package com.gmail.kutilandrej.cinema.dao.impl;
 
 import com.gmail.kutilandrej.cinema.dao.TicketDao;
 import com.gmail.kutilandrej.cinema.exception.DataProcessingException;
-import com.gmail.kutilandrej.cinema.lib.Dao;
 import com.gmail.kutilandrej.cinema.model.Ticket;
-import com.gmail.kutilandrej.cinema.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class TicketDaoImpl implements TicketDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
     public Ticket add(Ticket ticket) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(ticket);
             transaction.commit();
