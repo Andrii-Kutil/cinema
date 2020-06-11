@@ -46,6 +46,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             Query<ShoppingCart> query = session.createQuery(hql, ShoppingCart.class);
             query.setParameter("user", user);
             ShoppingCart shoppingCart = query.uniqueResult();
+            shoppingCart.setUser(user);
             return shoppingCart;
         } catch (Exception e) {
             throw new DataProcessingException("Can't find ShoppingCart", e);
