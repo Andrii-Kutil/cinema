@@ -16,19 +16,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private UserService userService;
     @Autowired
     private ShoppingCartService shoppingCartService;
+    @Autowired
+    private HashUtil hashUtil;
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
         return userService.findByEmail(email).filter(u -> u.getPassword()
-                .equals(HashUtil.hashPassword(password, u.getSalt())))
+                .equals(hashUtil.hashPassword(password, u.getSalt())))
                 .orElseThrow(() -> new AuthenticationException("Incorrect email or password!"));
     }
 
     @Override
     public User register(String email, String login, String password) {
         User user = new User(login, email);
-        user.setSalt(HashUtil.getSalt());
-        user.setPassword(HashUtil.hashPassword(password, user.getSalt()));
+        user.setSalt(hashUtil.getSalt());
+        user.setPassword(hashUtil.hashPassword(password, user.getSalt()));
         userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
         return user;

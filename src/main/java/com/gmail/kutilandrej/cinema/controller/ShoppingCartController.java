@@ -1,6 +1,7 @@
 package com.gmail.kutilandrej.cinema.controller;
 
 import com.gmail.kutilandrej.cinema.model.MovieSession;
+import com.gmail.kutilandrej.cinema.model.ShoppingCart;
 import com.gmail.kutilandrej.cinema.model.User;
 import com.gmail.kutilandrej.cinema.model.dto.ShoppingCartRequestDto;
 import com.gmail.kutilandrej.cinema.model.dto.ShoppingCartResponseDto;
@@ -42,7 +43,7 @@ public class ShoppingCartController {
     @GetMapping("/by-user")
     public ShoppingCartResponseDto getShoppingCartByUserId(
             @RequestParam(name = "userId") Long userId) {
-        return shoppingCartMapper.getShoppingCartResponseDtoFromShoppingCart(
-                shoppingCartService.getByUser(userService.get(userId)));
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(userService.get(userId));
+        return shoppingCartMapper.getShoppingCartResponseDtoFromShoppingCart(shoppingCart);
     }
 }
