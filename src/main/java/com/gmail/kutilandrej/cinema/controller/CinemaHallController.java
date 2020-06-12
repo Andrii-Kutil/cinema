@@ -5,6 +5,7 @@ import com.gmail.kutilandrej.cinema.model.dto.CinemaHallResponseDto;
 import com.gmail.kutilandrej.cinema.model.mapper.CinemaHallMapper;
 import com.gmail.kutilandrej.cinema.service.CinemaHallService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,9 @@ public class CinemaHallController {
 
     @GetMapping
     public List<CinemaHallResponseDto> getAllCinemaHalls() {
-        return cinemaHallMapper.allCinemaHallsResponseDto(cinemaHallService.getAll());
+        return cinemaHallService.getAll()
+                .stream()
+                .map(cinemaHallMapper::getCinemaHallResponseDtoFromCinemaHall)
+                .collect(Collectors.toList());
     }
 }

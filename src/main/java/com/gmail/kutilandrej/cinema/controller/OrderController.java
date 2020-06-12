@@ -10,6 +10,7 @@ import com.gmail.kutilandrej.cinema.service.OrderService;
 import com.gmail.kutilandrej.cinema.service.ShoppingCartService;
 import com.gmail.kutilandrej.cinema.service.UserService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,8 +45,10 @@ public class OrderController {
     @GetMapping
     public List<OrderResponseDto> getOrdersHistoryForUser(
             @RequestParam(name = "userId") Long userId) {
-        List<Order> orderHistory = orderService
-                .getOrderHistory(userService.get(userId));
-        return orderMapper.getOrderHistoryResponseDto(orderHistory);
+        List<Order> orderHistory = orderService.getOrderHistory(userService.get(userId));
+        return orderHistory
+                .stream()
+                .map(orderMapper::toDto)
+                .collect(Collectors.toList());
     }
 }

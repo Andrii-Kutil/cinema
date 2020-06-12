@@ -5,6 +5,7 @@ import com.gmail.kutilandrej.cinema.model.dto.MovieResponseDto;
 import com.gmail.kutilandrej.cinema.model.mapper.MovieMapper;
 import com.gmail.kutilandrej.cinema.service.MovieService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,8 @@ public class MovieController {
 
     @GetMapping
     public List<MovieResponseDto> getAll() {
-        return movieMapper.allMoviesResponseDto(movieService.getAll());
+        return movieService.getAll().stream()
+                .map(movieMapper::getMovieResponseDtoFromMovie)
+                .collect(Collectors.toList());
     }
 }

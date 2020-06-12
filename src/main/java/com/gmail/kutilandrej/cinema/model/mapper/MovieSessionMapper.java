@@ -5,8 +5,6 @@ import com.gmail.kutilandrej.cinema.model.dto.MovieSessionRequestDto;
 import com.gmail.kutilandrej.cinema.model.dto.MovieSessionResponseDto;
 import com.gmail.kutilandrej.cinema.service.CinemaHallService;
 import com.gmail.kutilandrej.cinema.service.MovieService;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,16 +26,7 @@ public class MovieSessionMapper {
         return movieSession;
     }
 
-    public List<MovieSessionResponseDto> getAvailableSessionsResponseDto(
-            List<MovieSession> availableSessions) {
-        List<MovieSessionResponseDto> movieSessionResponseDto = new ArrayList<>();
-        for (MovieSession movieSession : availableSessions) {
-            movieSessionResponseDto.add(getMovieSessionResponseFromMovieSession(movieSession));
-        }
-        return movieSessionResponseDto;
-    }
-
-    private MovieSessionResponseDto getMovieSessionResponseFromMovieSession(
+    public MovieSessionResponseDto getMovieSessionResponseFromMovieSession(
             MovieSession movieSession) {
         MovieSessionResponseDto movieSessionResponseDto = new MovieSessionResponseDto();
         movieSessionResponseDto.setCinemaHallId(movieSession.getCinemaHall().getId());
