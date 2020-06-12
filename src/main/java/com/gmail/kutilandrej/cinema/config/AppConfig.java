@@ -16,6 +16,8 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @ComponentScan(basePackages = {
         "com.gmail.kutilandrej.cinema.service",
         "com.gmail.kutilandrej.cinema.dao",
+        "com.gmail.kutilandrej.cinema.model.mapper",
+        "com.gmail.kutilandrej.cinema.util"
 })
 public class AppConfig {
 

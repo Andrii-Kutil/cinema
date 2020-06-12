@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -36,6 +37,18 @@ public class MovieDaoImpl implements MovieDao {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public Movie get(Long movieId) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM Movie WHERE id =:id";
+            Query<Movie> query = session.createQuery(hql, Movie.class);
+            query.setParameter("id", movieId);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get Movie", e);
         }
     }
 

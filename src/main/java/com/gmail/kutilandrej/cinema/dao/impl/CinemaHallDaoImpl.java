@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -48,6 +49,18 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all cinema halls. ", e);
+        }
+    }
+
+    @Override
+    public CinemaHall get(Long cinemaHallId) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM CinemaHall WHERE id =:id";
+            Query<CinemaHall> query = session.createQuery(hql, CinemaHall.class);
+            query.setParameter("id", cinemaHallId);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get CinemaHall", e);
         }
     }
 }

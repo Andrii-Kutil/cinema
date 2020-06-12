@@ -50,4 +50,17 @@ public class UserDaoImpl implements UserDao {
             throw new DataProcessingException("Can't find User", e);
         }
     }
+
+    @Override
+    public User get(Long userId) {
+
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM User U WHERE U.id = :id";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("id", userId);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get User", e);
+        }
+    }
 }
