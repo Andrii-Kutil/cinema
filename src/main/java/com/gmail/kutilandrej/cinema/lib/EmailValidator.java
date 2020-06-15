@@ -5,6 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class EmailValidator implements
         ConstraintValidator<EmailConstraint, String> {
+    private static final String EMAIL_REGEXP = ".+@.+\\..+";
 
     @Override
     public void initialize(EmailConstraint contactNumber) {
@@ -13,6 +14,6 @@ public class EmailValidator implements
     @Override
     public boolean isValid(String contactField,
                            ConstraintValidatorContext cxt) {
-        return contactField.matches(".+@.+\\..+");
+        return contactField.matches(EMAIL_REGEXP);
     }
 }

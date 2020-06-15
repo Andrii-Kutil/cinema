@@ -50,7 +50,7 @@ public class OrderController {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String email = principal.getUsername();
         User user = userService.findByEmail(email).get();
-        List<Order> orderHistory = orderService.getOrderHistory(userService.get(user.getId()));
+        List<Order> orderHistory = orderService.getOrderHistory(user);
         return orderHistory
                 .stream()
                 .map(orderMapper::toDto)
