@@ -1,6 +1,9 @@
 package com.gmail.kutilandrej.cinema.model.dto;
 
+import javax.validation.constraints.Min;
+
 public class CinemaHallRequestDto {
+    @Min(100)
     private int capacity;
     private String description;
 
