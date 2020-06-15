@@ -8,10 +8,6 @@ public class EmailValidator implements
     private static final String EMAIL_REGEXP = ".+@.+\\..+";
 
     @Override
-    public void initialize(EmailConstraint contactNumber) {
-    }
-
-    @Override
     public boolean isValid(String contactField,
                            ConstraintValidatorContext cxt) {
         return contactField.matches(EMAIL_REGEXP);
