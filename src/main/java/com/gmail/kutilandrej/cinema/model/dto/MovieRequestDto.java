@@ -1,6 +1,9 @@
 package com.gmail.kutilandrej.cinema.model.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class MovieRequestDto {
+    @NotNull
     private String title;
     private String description;
 
