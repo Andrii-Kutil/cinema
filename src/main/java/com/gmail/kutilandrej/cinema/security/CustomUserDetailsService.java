@@ -1,6 +1,5 @@
 package com.gmail.kutilandrej.cinema.security;
 
-import com.gmail.kutilandrej.cinema.model.Role;
 import com.gmail.kutilandrej.cinema.model.User;
 import com.gmail.kutilandrej.cinema.service.UserService;
 import java.util.Optional;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -24,8 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user.isPresent()) {
             builder = org.springframework.security.core.userdetails.User.withUsername(s);
             builder.password(user.get().getPassword());
-            String[] roles = user.get().getRoles().stream().map(Role::getRoleName)
-                    .map(Enum::name)
+            String[] roles = user.get().getRoles().stream()
+                    .map(role -> role.getRoleName().name())
                     .toArray(String[]::new);
             builder.roles(roles);
         } else {
