@@ -1,6 +1,5 @@
 package com.gmail.kutilandrej.cinema.service.impl;
 
-import com.gmail.kutilandrej.cinema.exception.AuthenticationException;
 import com.gmail.kutilandrej.cinema.model.Role;
 import com.gmail.kutilandrej.cinema.model.User;
 import com.gmail.kutilandrej.cinema.service.AuthenticationService;

@@ -19,11 +19,11 @@ public class InjectDataController {
 
     @PostConstruct
     public void insertRolesToDb() {
-        Role r1 = roleService.add(Role.of("ADMIN"));
-        Role r2 = roleService.add(Role.of("USER"));
-        User user2 = new User("admin", "admin@i.ua", "1234", Set.of(r1));
-        User user1 = new User("kutil", "kutil@i.ua", "1234", Set.of(r2));
-        userService.add(user1);
-        userService.add(user2);
+        Role roleAdmin = roleService.add(Role.of("ADMIN"));
+        Role roleUser = roleService.add(Role.of("USER"));
+        User admin = new User("admin", "admin@i.ua", "1234", Set.of(roleAdmin));
+        User user = new User("kutil", "kutil@i.ua", "1234", Set.of(roleUser));
+        userService.add(admin);
+        userService.add(user);
     }
 }
