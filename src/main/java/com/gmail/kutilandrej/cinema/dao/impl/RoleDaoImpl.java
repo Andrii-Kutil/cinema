@@ -42,11 +42,12 @@ public class RoleDaoImpl implements RoleDao {
     public Role getRoleByName(String roleName) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM Role R WHERE R.roleName = :roleName";
+            Role.RoleName roleNameEnum = Role.RoleName.valueOf(roleName);
             Query<Role> query = session.createQuery(hql, Role.class);
-            query.setParameter("roleName", roleName);
+            query.setParameter("roleName", roleNameEnum);
             return query.uniqueResult();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find User", e);
+            throw new DataProcessingException("Can't find Role", e);
         }
     }
 }
