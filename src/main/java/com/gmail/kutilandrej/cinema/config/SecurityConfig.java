@@ -2,10 +2,12 @@ package com.gmail.kutilandrej.cinema.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -13,16 +15,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
-                .withUser("kutil@i.ua").password(getEncoder().encode("1234")).roles("USER");
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(getEncoder());
     }
 
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.POST, "/register", "/shoppingcarts/add-moviesession",
+                        "/orders/complete")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/movies", "/cinema-halls",
+                        "/movie-sessions/available/**",
+                        "/shoppingcarts/by-user/**", "/orders")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/users/by-email/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/movies", "/cinema-halls", "/movie-sessions")
+                .hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .permitAll()

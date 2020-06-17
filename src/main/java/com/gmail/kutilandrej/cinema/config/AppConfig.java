@@ -17,7 +17,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
         "com.gmail.kutilandrej.cinema.service",
         "com.gmail.kutilandrej.cinema.dao",
         "com.gmail.kutilandrej.cinema.model.mapper",
-        "com.gmail.kutilandrej.cinema.util"
+        "com.gmail.kutilandrej.cinema.security"
 })
 public class AppConfig {
 
