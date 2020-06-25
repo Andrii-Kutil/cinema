@@ -8,6 +8,7 @@ import com.gmail.kutilandrej.cinema.service.ShoppingCartService;
 import com.gmail.kutilandrej.cinema.service.UserService;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,12 +19,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private RoleService roleService;
     @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
     private ShoppingCartService shoppingCartService;
 
     @Override
     public User register(String email, String login, String password) {
         User user = new User(login, email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         Role roleUser = roleService.getRoleByName("USER");
         user.setRoles(Set.of(roleUser));
         userService.add(user);
