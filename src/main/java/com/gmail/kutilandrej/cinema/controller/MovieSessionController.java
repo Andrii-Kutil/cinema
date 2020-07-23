@@ -29,18 +29,18 @@ public class MovieSessionController {
     private MovieSessionMapper movieSessionMapper;
 
     @PostMapping
-    public void addMovieSession(@RequestBody @Valid MovieSessionRequestDto movieSessionDto) {
+    public void add(@RequestBody @Valid MovieSessionRequestDto movieSessionDto) {
         movieSessionService.add(movieSessionMapper
                 .getMovieSessionFromMoviesSessionRequestDto(movieSessionDto));
 
     }
 
     @GetMapping("/available")
-    public List<MovieSessionResponseDto> getAllAvailableMovieSessions(
+    public List<MovieSessionResponseDto> getByDate(
             @RequestParam("movieId") Long movieId,
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         List<MovieSession> availableSessions = movieSessionService
-                .findAvailableSessions(movieId, date);
+                .getByDate(movieId, date);
         return availableSessions.stream()
                 .map(movieSessionMapper::getMovieSessionResponseFromMovieSession)
                 .collect(Collectors.toList());

@@ -20,13 +20,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+    public List<MovieSession> getByDate(Long id, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM MovieSession MS JOIN FETCH MS.movie "
                     + "JOIN FETCH MS.cinemaHall WHERE MS.movie.id = :id "
                     + "AND MS.showTime > :date1 AND MS.showTime < :date2";
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
-            query.setParameter("id", movieId);
+            query.setParameter("id", id);
             query.setParameter("date1", date.atStartOfDay());
             query.setParameter("date2", date.atTime(LocalTime.MAX));
             return query.getResultList();
@@ -58,15 +58,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession get(Long sessionId) {
+    public MovieSession getById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM MovieSession MS JOIN FETCH MS.movie "
                     + "JOIN FETCH MS.cinemaHall WHERE MS.id = :id";
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
-            query.setParameter("id", sessionId);
+            query.setParameter("id", id);
             return query.uniqueResult();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get MovieSession", e);
+            throw new DataProcessingException("Can't getById MovieSession", e);
         }
     }
 }

@@ -5,11 +5,11 @@ import com.gmail.kutilandrej.cinema.model.ShoppingCart;
 import com.gmail.kutilandrej.cinema.model.User;
 
 public interface ShoppingCartService {
-    void addSession(MovieSession movieSession, User user);
+    void add(MovieSession movieSession, User user);
 
     ShoppingCart getByUser(User user);
 
-    void registerNewShoppingCart(User user);
+    void create(User user);
 
     void clear(ShoppingCart shoppingCart);
 }

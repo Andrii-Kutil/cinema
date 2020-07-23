@@ -41,7 +41,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOrderHistory(User user) {
+    public List<Order> getByUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM Order O JOIN FETCH O.tickets AS T JOIN FETCH T.movieSession AS MS "
                     + "JOIN FETCH MS.movie JOIN FETCH MS.cinemaHall "

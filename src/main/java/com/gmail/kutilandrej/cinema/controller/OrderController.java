@@ -38,19 +38,19 @@ public class OrderController {
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/complete")
-    public void completeOrder(@RequestBody @Valid OrderRequestDto orderRequestDto) {
-        User user = userService.get(orderRequestDto.getUserId());
+    public void complete(@RequestBody @Valid OrderRequestDto orderRequestDto) {
+        User user = userService.getById(orderRequestDto.getUserId());
         List<Ticket> tickets = shoppingCartService.getByUser(user).getTickets();
         orderService.completeOrder(tickets, user);
     }
 
     @GetMapping
-    public List<OrderResponseDto> getOrdersHistoryForUser(
+    public List<OrderResponseDto> getByUSer(
             Authentication authentication) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String email = principal.getUsername();
-        User user = userService.findByEmail(email).get();
-        List<Order> orderHistory = orderService.getOrderHistory(user);
+        User user = userService.getByEmail(email).get();
+        List<Order> orderHistory = orderService.getByUser(user);
         return orderHistory
                 .stream()
                 .map(orderMapper::toDto)

@@ -41,14 +41,14 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public Movie get(Long movieId) {
+    public Movie getById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM Movie WHERE id =:id";
             Query<Movie> query = session.createQuery(hql, Movie.class);
-            query.setParameter("id", movieId);
+            query.setParameter("id", id);
             return query.uniqueResult();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get Movie", e);
+            throw new DataProcessingException("Can't getById Movie", e);
         }
     }
 
