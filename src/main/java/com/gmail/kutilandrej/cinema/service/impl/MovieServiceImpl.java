@@ -19,8 +19,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie get(Long movieId) {
-        return movieDao.get(movieId);
+    public Movie getById(Long id) {
+        return movieDao.getById(id);
     }
 
     @Override

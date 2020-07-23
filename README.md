@@ -14,19 +14,19 @@
 
 ## <a name='purpose'></a>Project purpose
 
-This project is a simple version of cinema.
+This project is a simple version of cinema tickets booking functionality.
 
 <hr>
 
 This cinema has basic functions such as:
 
 Available functions for all users: 
-* registration
+* account registration
 * log in/log out
 * view all movies, available movie sessions and cinema halls
   
 Available functions for users with a USER role only: 
-* add movie sessions in a cart
+* add movie sessions to a cart
 * view the shopping cart
 * complete and view orders
 

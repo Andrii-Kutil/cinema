@@ -31,6 +31,6 @@ public class InjectDataController {
         User admin = new User("admin", "admin@i.ua",
                 passwordEncoder.encode("1234"), Set.of(roleAdmin));
         userService.add(admin);
-        authenticationService.register("user@i.ua", "user", "1234");
+        authenticationService.registration("user@i.ua", "user", "1234");
     }
 }

@@ -53,14 +53,14 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     }
 
     @Override
-    public CinemaHall get(Long cinemaHallId) {
+    public CinemaHall getById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM CinemaHall WHERE id =:id";
             Query<CinemaHall> query = session.createQuery(hql, CinemaHall.class);
-            query.setParameter("id", cinemaHallId);
+            query.setParameter("id", id);
             return query.uniqueResult();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get CinemaHall", e);
+            throw new DataProcessingException("Can't getById CinemaHall", e);
         }
     }
 }

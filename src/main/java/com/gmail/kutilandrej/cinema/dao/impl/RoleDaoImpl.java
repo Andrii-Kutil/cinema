@@ -39,10 +39,10 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Role getRoleByName(String roleName) {
+    public Role getByName(String name) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM Role R WHERE R.roleName = :roleName";
-            Role.RoleName roleNameEnum = Role.RoleName.valueOf(roleName);
+            Role.RoleName roleNameEnum = Role.RoleName.valueOf(name);
             Query<Role> query = session.createQuery(hql, Role.class);
             query.setParameter("roleName", roleNameEnum);
             return query.uniqueResult();

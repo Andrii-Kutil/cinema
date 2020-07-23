@@ -36,18 +36,18 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/add-movie-session")
-    public void addMovieSessionInCart(@RequestBody @Valid ShoppingCartRequestDto cartRequestDto) {
-        MovieSession movieSession = movieSessionService.get(cartRequestDto.getSessionId());
-        User user = userService.get(cartRequestDto.getUserId());
-        shoppingCartService.addSession(movieSession, user);
+    public void addSessionIntoCart(@RequestBody @Valid ShoppingCartRequestDto cartRequestDto) {
+        MovieSession movieSession = movieSessionService.getById(cartRequestDto.getSessionId());
+        User user = userService.getById(cartRequestDto.getUserId());
+        shoppingCartService.add(movieSession, user);
     }
 
     @GetMapping("/by-user")
-    public ShoppingCartResponseDto getShoppingCartByUserId(
+    public ShoppingCartResponseDto getByUser(
             Authentication authentication) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String email = principal.getUsername();
-        User user = userService.findByEmail(email).get();
+        User user = userService.getByEmail(email).get();
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         return shoppingCartMapper.getShoppingCartResponseDtoFromShoppingCart(shoppingCart);
     }

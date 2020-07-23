@@ -24,13 +24,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private ShoppingCartService shoppingCartService;
 
     @Override
-    public User register(String email, String login, String password) {
+    public User registration(String email, String login, String password) {
         User user = new User(login, email);
         user.setPassword(passwordEncoder.encode(password));
-        Role roleUser = roleService.getRoleByName("USER");
+        Role roleUser = roleService.getByName("USER");
         user.setRoles(Set.of(roleUser));
         userService.add(user);
-        shoppingCartService.registerNewShoppingCart(user);
+        shoppingCartService.create(user);
         return user;
     }
 }

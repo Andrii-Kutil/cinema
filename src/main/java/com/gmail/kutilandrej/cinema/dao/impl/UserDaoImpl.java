@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM User U WHERE U.email = :email";
             Query<User> query = session.createQuery(hql, User.class);
@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDao {
             query.setParameter("id", userId);
             return query.uniqueResult();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get User", e);
+            throw new DataProcessingException("Can't getById User", e);
         }
     }
 }

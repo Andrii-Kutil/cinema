@@ -19,8 +19,8 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     }
 
     @Override
-    public CinemaHall get(Long cinemaHallId) {
-        return cinemaHallDao.get(cinemaHallId);
+    public CinemaHall getById(Long id) {
+        return cinemaHallDao.getById(id);
     }
 
     @Override

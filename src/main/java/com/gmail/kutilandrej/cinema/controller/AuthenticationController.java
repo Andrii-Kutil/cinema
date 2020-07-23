@@ -15,10 +15,10 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping("/register")
-    public void register(@RequestBody @Valid UserRegistrationDto userDto)
+    @PostMapping("/registration")
+    public void registration(@RequestBody @Valid UserRegistrationDto userDto)
             throws AuthenticationException {
-        authenticationService.register(userDto.getEmail(),
+        authenticationService.registration(userDto.getEmail(),
                 userDto.getLogin(), userDto.getPassword());
     }
 }
